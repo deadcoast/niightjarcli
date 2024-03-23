@@ -1,3 +1,5 @@
+import logging
+import getpass
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -21,17 +23,92 @@ import shelve
 import os
 import sys
 
-import self
+import self as self
+
+from pathlib import Path
+
+# The path to shelve database
+HOME_DIR = str(Path.home())
+DB_PATH = os.path.join(HOME_DIR, ".nightjar")
+SHELVE_DB = os.path.join(DB_PATH, "nightjar")
+
+# Establish the directory structure for templates
+if not os.path.exists(DB_PATH):
+    os.makedirs(DB_PATH)
+
+# Define the shelve database path
+if not os.path.exists(SHELVE_DB):
+    with shelve.open(SHELVE_DB):
+        pass
+
+# Add a new key-value pair to the database
+with shelve.open(SHELVE_DB) as db:
+    db["key"] = "value"
+
+# Retrieve the value associated with the key
+with shelve.open(SHELVE_DB) as db:
+    value = db["key"]
+    print(value)
+
+# Remove the key-value pair from the database
+with shelve.open(SHELVE_DB) as db:
+    del db["key"]
+
+# Check if the key exists in the database
+with shelve.open(SHELVE_DB) as db:
+    if "key" in db:
+        print("Key exists in the database.")
+    else:
+        print("Key does not exist in the database.")
+
+
+# The path to shelve database
+def intro():
+    """
+    Intro function represents CLI initiation
+    """
+    logging.info("Welcome to the Nightjar CLI.")
+    logging.info("Type 'intro' to start the CLI.")
+    logging.info("Type 'exit' to quit the CLI.")
+
+    while True:
+        # Command prompt
+        command = getpass.getpass("> ")
+
+        if command.lower().equals('intro'):
+            logging.info("Nightjar CLI is active.")
+            break
+        elif command.lower().equals('exit'):
+            logging.info("Nightjar CLI is shutting down.")
+            return
+        else:
+            logging.info("Invalid command. Please try again.")
+
+
+# Command prompt
+command = input("> ")
 
 SHELVE_DB = "nightjar"
 
 
 # The path to shelve database
-def intro():
-    # Intro function represents CLI initiation
+def header():
+    # Header function represents CLI initiation
     print("Welcome to the Nightjar CLI.")
     print("Type 'intro' to start the CLI.")
     print("Type 'exit' to quit the CLI.")
+
+    # Command prompt
+    command = input("> ")
+
+    if command.lower() == 'intro':
+        print("Nightjar CLI is active.")
+    elif command.lower() == 'exit':
+        print("Nightjar CLI is shutting down.")
+        sys.exit()
+    else:
+        print("Invalid command. Please try again.")
+        intro()
 
     # Command prompt
     command = input("> ")
@@ -50,50 +127,27 @@ def intro():
 command = input("> ")
 
 
-# BANNER ASCII
-#
-#
-#
-#                                              /
-#                                             /
-#                                            /
-#                                           /
-#                                          /
-#                                         /;
-#                                        /;
-#                                       //
-#                                      //
-#                                     ;/
-#                                   ,//
-#                               _,-' ;_,,
-#                            _,'-_  ;|,'
-#                        _,-'_,..--. |
-#                ___   .'-'_)'  ) _)\|      ___
-#              ,'"""`'' _  )   ) _)  ''--'''_,-'
-#           -={-o-  /|    )  _)  ) ; '_,--''
-#              \ -' ,`.  ) .)  _)_,''|
-#               `."(   `------''     /
-#                 `.\             _,'
-#                   `-.____....-\\
-#                             || \\
-#                             // ||
-#                            //  ||
-#                           //   ||
-#                       _-.//_, _||_,
-#                         ,'   ,-'/
-#
-# ------------------------------------------------
-# Thank you for visiting https://asciiart.website/
-# This ASCII pic can be found at
-# https://asciiart.website/index.php?art=animals/birds%20(land)
+def display_large_ascii():
+    """
+    Display a large ASCII art representing the nightjar CLI.
+
+    This function does not take any parameters.
+
+    It returns the ASCII art as a string.
+
+    """
+    with open('ascii_art.txt', 'r') as file:
+        ascii_art = file.read()
+    return ascii_art
+
 
 def intro():
     # Intro function represents CLI initiation
-    print(f"`   \\     Welcome to nightjar CLI`")
-    print(f"`   (o>    LOCATION: nest Library`")
-    print(f"`   (()    1. intro to nightjar.`")
-    print(f"`-- || ----2. help.`")
-    print(f"`          3. list nightjar menu categories.`")
+    print("`   \\     Welcome to nightjar CLI`")
+    print("`   (o>    LOCATION: nest Library`")
+    print("`   (()    1. intro to nightjar.`")
+    print("`-- || ----2. help.`")
+    print("`          3. list nightjar menu categories.`")
     print("Type 'exit' at anytime to quit the CLI.`")
 
     # Command prompt
@@ -453,13 +507,11 @@ def discard_twig(command_title):
     # Check if the user has already confirmed the deletion
     if '-+' in sys.argv:
         print("User has already confirmed deletion.")
+    elif require_confirmation(f"Are you sure you want to delete '{command_title}'?"):
+        # Perform the deletion operation here.
+        print(f"Deleted '{command_title}' from the library.")
     else:
-        # Ask for confirmation before deletion
-        if require_confirmation(f"Are you sure you want to delete '{command_title}'?"):
-            # Perform the deletion operation here.
-            print(f"Deleted '{command_title}' from the library.")
-        else:
-            print("Deletion cancelled.")
+        print("Deletion cancelled.")
 
 
 def get(function_name):
