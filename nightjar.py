@@ -1,31 +1,55 @@
-import logging
-import getpass
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on 2022-11-22
-@Author: Firstname Lastname
-@Title: nightjar - A Python CLI Nest Library
-@Description: A Dynamic, customizable and modular CLI creation and Native Windows Library CLI.
-@Features:  1. nest: The nightjar CLI home Library.
-            2. twig: Command functions.
-            3. egg: File specific commands and customizations.
-            3. chirp: creat a simple print and validation command for the nightjars chirp language prompting to user.
-            4. flight: Navigational menu: create new navigational menu's, hotkeys, list current flight plans.
-            5. padding: A list of templates for storing user commands and files in 3 categories.
-@Version: 0.1.0
-@License: MIT
-"""
 
-import time
-import shelve
 
+# "Created on 2022-11-22
+# "@Author: Firstname Lastname
+# "@Title: nightjar - A Python CLI Nest Library
+# "@Description: A Dynamic, customizable and modular CLI creation and Native Windows Library CLI.
+# "@Features:
+# 1. nest: The nightjar CLI home Library.
+# 2. twig: Command functions.
+# 3. egg: File specific commands and customizations.
+# 4. chirp: creat a simple print and validation command for the CLI menu.
+# 5. flight: Navigational menu: create new navigational menu's, hotkeys, list current flight plans.
+# 6. padding: A list of templates for storing user commands and files in 3 categories.
+# @Version: 0.1.0
+# @License: MIT
+
+import getpass
+import logging
 import os
+import shelve
 import sys
-
-import self as self
-
+import time
 from pathlib import Path
+
+# Command prompt
+command = input("> ")
+
+
+class NightjarCLILogging:(object):
+"""
+Logic: A class to handle logging for the Nightjar CLI.
+SYNTAX: [𝙉]=('input_parameter')
+PLAIN TEXT FORMAT: nest --input_parameter
+function: A class to handle logging for the Nightjar CLI.
+input_parameter: The input parameter for the command.
+VARIABLES LIST: .md, .asciidoc, .ansi, .txt, .json, .py, .sh, .csv, .html, .css, .js, .sql, .xml, .yaml,
+.toml, .ini, .cfg, .conf, .log, .md, .rst, .tex, .pdf, .docx, .pptx, .xlsx, .csv, .zip, .tar, .gz, .7z, .rar, .jpg,
+.png, .gif, .svg, .mp4, .mp3, .wav, .flac, .ogg, .avi, .mov, .mkv, .wmv, .webm, .flv, .pdf, .docx, .pptx, .xlsx,
+"""
+# Logging
+logging.basicConfig(
+    filename="nightjar.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+
+# Logging
+logging.info(f"Command: {command}")
+logging.info("Nightjar CLI is active.")
 
 # The path to shelve database
 HOME_DIR = str(Path.home())
@@ -93,51 +117,69 @@ SHELVE_DB = "nightjar"
 
 # The path to shelve database
 def header():
-    # Header function represents CLI initiation
-    print("Welcome to the Nightjar CLI.")
-    print("Type 'intro' to start the CLI.")
-    print("Type 'exit' to quit the CLI.")
+    """
+    Header function represents CLI initiation
+    """
+    try:
+        logging.error("Welcome to the Nightjar CLI.")
+        logging.error("Type 'intro' to start the CLI.")
+        logging.error("Type 'exit' to quit the CLI.")
+    except Exception as e:  # Catch any exceptions that occur
+        print(f"An error occurred: {str(e)}")
+        return
 
-    # Command prompt
-    command = input("> ")
+    try:
+        running = True
+        while running:
+            # Command prompt
+            command = getpass.getpass("> ")
 
-    if command.lower() == 'intro':
-        print("Nightjar CLI is active.")
-    elif command.lower() == 'exit':
+            command_lower = command.lower()
+            if command_lower == 'intro':
+                logging.error("Nightjar CLI is active.")
+                running = False
+            elif command_lower == 'exit':
+                logging.error("Nightjar CLI is shutting down.")
+                return
+            else:
+                logging.error("Invalid command. Please try again.")
+    except Exception as e:  # Catch any exceptions that occur
+        print(f"An error occurred: {str(e)}")
+        return
+
+    finally:
         print("Nightjar CLI is shutting down.")
-        sys.exit()
-    else:
-        print("Invalid command. Please try again.")
-        intro()
 
-    # Command prompt
-    command = input("> ")
 
-    if command.lower() == 'intro':
-        print("Nightjar CLI is active.")
-    elif command.lower() == 'exit':
-        print("Nightjar CLI is shutting down.")
-        sys.exit()
-    else:
-        print("Invalid command. Please try again.")
-        intro()
-
+# The path to shelve database
+SHELVE_DB = "./nightjar_cli_db"
 
 # Command prompt
 command = input("> ")
 
+ascii_art = None
 
-def display_large_ascii():
+
+def display_large_ascii(file_path):
     """
     Display a large ASCII art representing the nightjar CLI.
 
-    This function does not take any parameters.
+    This function takes a file path as a parameter.
 
     It returns the ASCII art as a string.
 
     """
-    with open('ascii_art.txt', 'r') as file:
-        ascii_art = file.read()
+    global ascii_art
+    if ascii_art is None:
+        try:
+            with open(file_path, 'r') as file:
+                ascii_art = file.read()
+        except FileNotFoundError:
+            raise FileNotFoundError("The ASCII art file '{}' is missing.".format(file_path))
+        except PermissionError:
+            return "Error: Unable to read the ASCII art file due to permission issues."
+    if not ascii_art:
+        return "No ASCII art found."
     return ascii_art
 
 
