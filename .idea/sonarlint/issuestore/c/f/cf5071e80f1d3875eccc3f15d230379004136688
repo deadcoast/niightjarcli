@@ -1,12 +1,13 @@
 
-¤python:S1192R"_Define a constant instead of duplicating this literal "Nightjar CLI is shutting down." 5 times.(¨£ø«8û‚¼Øæ1J$50e0b884-c7e9-44db-8c1a-4d942572d583
-¨python:S1192U"cDefine a constant instead of duplicating this literal "Invalid command. Please try again." 5 times.(£¦Á8û‚¼Øæ1J$5ee40439-5bd7-424b-9daa-18f7ddb0cc07
-›python:S1192Ì"UDefine a constant instead of duplicating this literal 'nightjar_commands.db' 5 times.(©Ò»Ô8‘Ñí×æ1J$9de570d0-b1b8-48f8-9634-af7588048b8a
-python:S1192O"XDefine a constant instead of duplicating this literal "Nightjar CLI is active." 5 times.(ÉŒ’–8û‚¼Øæ1J$c888c51b-9fa8-4006-af9a-1f9927a39b1e
- python:S1192Ä"UDefine a constant instead of duplicating this literal "nightjar_commands.db" 6 times.(ıõ«İøÿÿÿÿ8‘Ñí×æ1J$fca211a1-ac90-468a-a73f-9a2054fc29d1
-mpython:S108*")Either remove or fill this block of code.(ã‘Û¾8û‚¼Øæ1J$18ef72ad-790e-4a9b-9a97-ee4219799aa7
-—python:S1226Œ"LIntroduce a new variable or use its initial value before reassigning 'args'.(ç –Ùıÿÿÿÿ8‘Ñí×æ1J$b0699cd0-5ddc-47b9-aedd-6f0ca127959f
-‡python:S930•"BAdd 1 missing arguments; 'lay_egg' expects 2 positional arguments.(ÂääŸ8‘Ñí×æ1J$06bb000b-4a17-4a02-a5c1-8fce6558fd66
-wpython:S1172·",Remove the unused function parameter "args".(œİ‹‰ûÿÿÿÿ8’Ñí×æ1J$4a64cdf7-697e-42dc-b5ea-effb3a48d8c5
-¡python:S930„"WRemove 1 unexpected arguments; 'handle_multiline_input' expects 0 positional arguments.(­ÿø”øÿÿÿÿ8’Ñí×æ1J$eb8462cf-30ef-411b-b939-2551a692433c
-›python:S930†"WRemove 1 unexpected arguments; 'handle_multiline_input' expects 0 positional arguments.(ÍÕíP8’Ñí×æ1J$28637ed0-5e77-49f1-b4d7-90ddb5868d2e
+¤python:S1192R"_Define a constant instead of duplicating this literal "Nightjar CLI is shutting down." 4 times.(¨£ø«8û‚¼Øæ1J$d7f27cb0-606f-428c-835a-9abc6b33d7fa
+¨python:S1192U"cDefine a constant instead of duplicating this literal "Invalid command. Please try again." 5 times.(£¦Á8û‚¼Øæ1J$db2c1299-2bc3-493f-ac74-058c834c5aad
+›python:S1192Ï"UDefine a constant instead of duplicating this literal 'nightjar_commands.db' 5 times.(©Ò»Ô8‘Ñí×æ1J$5cdda368-2534-4928-9abb-90e5dfeb3276
+python:S1192O"XDefine a constant instead of duplicating this literal "Nightjar CLI is active." 4 times.(ÉŒ’–8û‚¼Øæ1J$f94e83cf-0c68-46d7-8075-6c8a6f919522
+ python:S1192Ç"UDefine a constant instead of duplicating this literal "nightjar_commands.db" 6 times.(ıõ«İøÿÿÿÿ8‘Ñí×æ1J$c510f436-cb08-4691-896b-92510c7e3098
+mpython:S108*")Either remove or fill this block of code.(ã‘Û¾8û‚¼Øæ1J$22b62da4-8608-4a9f-84c6-237811654ff6
+—python:S1226"LIntroduce a new variable or use its initial value before reassigning 'args'.(ç –Ùıÿÿÿÿ8‘Ñí×æ1J$f5ca36bb-b9b7-4697-b868-bea9011d1cac
+‡python:S930˜"BAdd 1 missing arguments; 'lay_egg' expects 2 positional arguments.(ÂääŸ8‘Ñí×æ1J$288d0068-fbc6-4f58-b2c3-279734a5764f
+wpython:S1172º",Remove the unused function parameter "args".(œİ‹‰ûÿÿÿÿ8’Ñí×æ1J$ad5e2fb0-15ca-4c52-8a7f-9783c55f15e3
+—python:S930ú"RRemove 1 unexpected arguments; 'initiate_nightjar' expects 0 positional arguments.(ÆŒõÂ8­î¾Ûæ1J$7146a62f-17c2-4f08-b3c9-3f1b51fcfebc
+¡python:S930‡"WRemove 1 unexpected arguments; 'handle_multiline_input' expects 0 positional arguments.(­ÿø”øÿÿÿÿ8’Ñí×æ1J$365ce166-57f2-4174-9457-c274ba55cbb1
+›python:S930‰"WRemove 1 unexpected arguments; 'handle_multiline_input' expects 0 positional arguments.(ÍÕíP8’Ñí×æ1J$f5e9b294-6c58-4288-a7ad-25d0da97c05a
