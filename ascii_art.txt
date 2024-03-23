@@ -6,3 +6,10 @@ def ascii_art():
     print("  ___) | || (_| \__ \   <| | (_| | (__|   <| | | | |")
     print(" |____/ \__\__,_|___/_|\_\_|\__,_|\___|_|\_\_| |_|_|")
     print("")
+    print("Welcome to the Python Calculator!")
+    print("")
+    print("Please select an operation:")
+# call the ascii_art function
+ascii_art()
+
+

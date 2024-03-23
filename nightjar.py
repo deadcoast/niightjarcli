@@ -154,22 +154,25 @@ def intro():
     command = input("> ")
 
     if command.lower() == 'intro':
-        print("Nightjar CLI is active.")
+        print("nightjar CLI is active.")
 
     elif command.lower() == 'exit':
-        print("Nightjar CLI is shutting down.")
+        print("nightjar CLI is shutting down.")
         sys.exit()
     else:
         print("Invalid command. Please try again.")
         intro()
 
 
-def initiate_nightjar(*args):
+def initiate_nightjar():
     """
     The actual startup logic when the 'intro' command is executed.
     """
-    print("Nightjar CLI is active.")
-    # [TODO] Add any necessary startup procedures here.
+    try:
+        print("Nightjar CLI is active.")
+        # [TODO] Add any necessary startup procedures here.
+    except Exception as e:
+        print(f'Error occurred: {str(e)}')
 
 
 def handle_multiline_input():
