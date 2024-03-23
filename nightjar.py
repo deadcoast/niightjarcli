@@ -21,6 +21,8 @@ import shelve
 import os
 import sys
 
+import self
+
 SHELVE_DB = "nightjar"
 # The path to shelve database
 def intro():
@@ -174,6 +176,8 @@ def view_cheat_sheet():
 # Introduce a basic structure for future implementation of a template library using FileSystem-based methods.
 def padding_nest():
     """
+    SYNTAX: [𝓁]=('input_parameter')
+    PLAIN TEXT FORMAT: nest padding --input_parameter
     Logic: A list of templates, or 'padding' in the Nightjar CLI library.
     CATEGORIES: 1. chirp padding (pad_chirp: A list of templates for nightjars chirp language prompting to user.
                     1. print to user.
@@ -196,6 +200,8 @@ def padding_nest():
 
 def pad_chirp("input_parameter"):
     """
+    SYNTAX: [pp chirp]=('input_parameter')
+    PLAIN TEXT FORMAT: chirp -tt # parser should convert [tt] to [π]
     Logic: A list of templates, or 'padding' in the Nightjar CLI library.
     CATEGORIES: 1. chirp padding (pad_chirp): A list of templates for nightjars chirp language prompting to user.
                     1. print to user.
@@ -215,28 +221,48 @@ def pad_chirp("input_parameter"):
     if not os.path.exists(template_dir):
         os.makedirs(template_dir)  # Establish the directory structure for templates
     print("Padding chirp created, lets add some chirps!.")
+
+
+def discard_nest(param):
+    """
+    Logic: A command to delete a file saved in the nest library.
+    CLI DISPLAY: Deletes a file saved in the nest library.
+    ADDITIONAL REQ: nest commands must include the format of the file in the title.
+    if the user confirms the remove_nest command with '-+' prior or during execution, skip confirmation prompt.
+    SYNTAX: [-]=('nest_name.txt') # All nest  commands must include the format of the file in the title.
+    PLAIN TEXT FORMAT: nest discard --nest_name.txt
+
+    :param param: The name of the file to be deleted.
+    :return: None
+    """
+    pass
+
+
 def bird_verbs(command_input, show_twig=None):
     """
     Parses and executes a given command_input by delegating to the appropriate function.
     """
     command_actions = {
-        'store nest': store_nest,
-        'store egg': store_egg,
-        'store twig': store_twig,
-        'get twig': get_twig,
-        'get egg': get_egg,
-        'get nest': get_nest,
-        'show eggs': show_eggs,
         'show nest': all_nest,
-        'show twig': show_twig,
+        'store nest': store_nest,
+        'discard nest': discard_nest(command_input) if command_input else discard_nest("nest_1.py"),
+        'get nest': get_nest(command_input),
+        'lay egg': lay_egg(command_input) if command_input else lay_egg("egg_1.py", "This is the first egg."),
+        'show eggs': show_eggs,
+        'rotten egg': rotten_egg,
+        'pad egg': pad_egg,
+        'get egg': get_egg,
+
+        'show twigs': show_twigs,
         'discard twig': discard_twig(),
-        'discard egg': discard_egg(),
-        'discard nest': discard_nest(),
-        'flight': flight_plan,
+        'pad twig': pad_twig,
+        'store twig': store_twig,
+        'get twig': get_twigs,
+        'flight': flight_plan(command_input),
         'padding': padding_nest,
         'pad chirp': pad_chirp,
-        'pad twig': pad_twig,
-        'pad egg': pad_egg,
+
+
         # Add future command mappings here...
     }
     if parts := command_input.split():
@@ -244,7 +270,7 @@ def bird_verbs(command_input, show_twig=None):
         if command_key in command_actions:
             command_actions[command_key](*args)
         else:
-            get_twig(command_input)
+            get_twigs(command_input)
     else:
         print("No twig entered.")
 
@@ -375,7 +401,7 @@ def discard_twig(command_title):
             print("Deletion cancelled.")
 
 
-def get_twig(task_name, *args):
+def get_twigs(task_name, *args):
     """
     Starts and or simulates a task or twig with a given task_name and additional arguments.
     This is an enhancement over the placeholder that provides actual logic.
@@ -415,7 +441,7 @@ def store_twig(task_name, task_description):
 # Navigation function, provide a list of 4 available menus to navigate to
 def flight_plan(menu_name, *args):
     print(f"`   \\      Where to: {menu_name}")
-    print(f"`   (o>     Where to: {get_twig(menu_name)}")
+    print(f"`   (o>     Where to: {get_twigs(menu_name)}")
     print(f"`   (()     Where to: {get_nest}")
     print(f"`---||------Where to: {menu_name}")
 
@@ -437,7 +463,7 @@ def flight_plan(menu_name, *args):
     elif menu_name == 'nest':
         all_nest()
     elif menu_name == 'twig':
-        get_twig(menu_name)
+        get_twigs(menu_name)
     elif menu_name == 'flight':
         flight_plan(menu_name)
 
@@ -454,13 +480,13 @@ def parse_nightjar(command):
     elif command.startswith("[-]="):
         discard_twig(command[4:])
     elif command.startswith("[-+]="):
-        get_twig(command[5:])
+        get_twigs(command[5:])
     elif command.startswith("[%]="):
         flight_plan(command[4:])
     elif command.startswith("[𝓁]="):
         show_eggs()
     elif command.startswith("[𝑡]="):
-        template_placeholder()
+        padding_nest()
 
 
 # Main CLI Loop
@@ -476,20 +502,27 @@ def main():
         # If -=- is not present, enter interactive mode
         print("Welcome to @nightjar CLI. Type 'exit' to quit.")
         while True:
-            command = input("> ")
-            if command.lower() == 'exit':
+            command_input = input("nightjar> ")
+            if command_input.lower() == 'exit':
                 break
-            elif command.startswith(":"):
-                handle_multiline_command(command)
+            elif command_input.startswith("-=-"):
+                parse_nightjar(command_input[3:])
             else:
-                parse_nightjar(command)
+                parse_nightjar(command_input)
+
+    print("Nightjar CLI is shutting down.")
 
 
 if __name__ == "__main__":
     intro()
-    template_library_structure()
-    initiate_nightjar()
+    lay_egg("egg_1.py", "This is the first egg.")
+    lay_egg("egg_2.py", "This is the second egg.")
+    lay_egg("egg_3.py", "This is the third egg.")
+    lay_egg("egg_4.py", "This is the fourth egg.")
+    padding_nest()
+    initiate_nightjar(self)
     main()
+
 
 
 def main_loop():
@@ -501,8 +534,8 @@ def main_loop():
         if command_input.lower() == 'exit':
             break
         elif command_input.startswith("-=-"):
-            handle_command(command_input[3:])
+            handle_multiline_input(command_input[3:])
         else:
-            handle_command(command_input)
+            handle_multiline_input(command_input)
 
 # This logic would be below the intro() function within the `if __name__ == "__main__":` block.
