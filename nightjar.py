@@ -24,6 +24,8 @@ import sys
 import self
 
 SHELVE_DB = "nightjar"
+
+
 # The path to shelve database
 def intro():
     # Intro function represents CLI initiation
@@ -43,8 +45,10 @@ def intro():
         print("Invalid command. Please try again.")
         intro()
 
+
 # Command prompt
 command = input("> ")
+
 
 # BANNER ASCII
 #
@@ -105,28 +109,6 @@ def intro():
         print("Invalid command. Please try again.")
         intro()
 
-def all_nest():
-    """
-    Lists all commands/files stored in the library with up to the first 50 characters of details.
-    Lists details such as size and last modification time of the database file.
-    """
-    database_path = f"{SHELVE_DB}.dat"  # Shelve uses the .dat extension for the database file
-    try:
-        with shelve.open(SHELVE_DB, flag='r') as db:  # 'r' for read-only because we are listing
-            print("Listing all stored items with details:")
-            for key in db:
-                item_preview = str(db[key])[
-                               :50]  # Converts any type of item to a string and takes the first 50 characters
-                print(f"{key}: {item_preview}...")
-        # Gathering detailed information about the database file itself
-        file_size = os.path.getsize(database_path)
-        mod_time = os.path.getmtime(database_path)
-        print(f"Library database file: {database_path}")
-        print(f"Size: {file_size} bytes")
-        print(f"Last Modified: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(mod_time))}")
-    except FileNotFoundError:
-        print("The storage database file does not exist.")
-
 
 def initiate_nightjar(*args):
     """
@@ -150,21 +132,12 @@ def handle_multiline_input():
     return "\n".join(input_lines)
 
 
-# More likely, this would be done through a batch file or a configured PATH environment variable.
-
-def parse_cli_input(cli_input):
-    if cli_input.startswith("-=-"):
-        handle_command(cli_input[3:])
-    else:
-        handle_command(cli_input)
-
-
 def handle_custom_syntax(command):
     # Mapping capital letters to custom symbols
     symbol_map = {'LL': '𝓁', 'TT': '𝑡', 'FF': 'ƒ'}
     for key, value in symbol_map.items():
         command = command.replace(key, value)
-    parse_cli_input(command)  # Assuming parse_cli_input is a previously defined function
+    bird_verbs(command)  # Assuming parse_cli_input is a previously defined function
 
 
 def view_cheat_sheet():
@@ -172,24 +145,49 @@ def view_cheat_sheet():
     print("Displaying cheat sheet...")
 
 
+def all_nest():
+    """
+    Logic: A master list, or 'nest', of all stored commands and files in the Nightjar CLI library.
+    SYNTAX: [𝙉]=('input_parameter')
+    PLAIN TEXT FORMAT: nest --input_parameter # parser should convert [nest] to [𝙉]
+    Lists all commands/files stored in the library with up to the first 50 characters of details.
+    Lists details such as size and last modification time of the database file.
+    """
+    database_path = f"{SHELVE_DB}.dat"  # Shelve uses the .dat extension for the database file
+    try:
+        with shelve.open(SHELVE_DB, flag='r') as db:  # 'r' for read-only because we are listing
+            print("Listing all stored items with details:")
+            for key in db:
+                item_preview = str(db[key])[
+                               :50]  # Converts any type of item to a string and takes the first 50 characters
+                print(f"{key}: {item_preview}...")
+        # Gathering detailed information about the database file itself
+        file_size = os.path.getsize(database_path)
+        mod_time = os.path.getmtime(database_path)
+        print(f"Library database file: {database_path}")
+        print(f"Size: {file_size} bytes")
+        print(f"Last Modified: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(mod_time))}")
+    except FileNotFoundError:
+        print("The storage database file does not exist.")
+
+
 # Template Library Placeholder
 # Introduce a basic structure for future implementation of a template library using FileSystem-based methods.
 def padding_nest():
     """
-    SYNTAX: [𝓁]=('input_parameter')
-    PLAIN TEXT FORMAT: nest padding --input_parameter
+    SYNTAX: [𝙉],[𝘗]=('input_parameter')
+    PLAIN TEXT FORMAT: nest -pp --input_parameter # parser should convert [pp] to [𝘗]
     Logic: A list of templates, or 'padding' in the Nightjar CLI library.
-    CATEGORIES: 1. chirp padding (pad_chirp: A list of templates for nightjars chirp language prompting to user.
+    CATEGORIES:
+    :param: (pad_chirp): A list of templates for nightjars chirp language prompting and validation to user.
+    :param: (pad_twig): A list of templates for placeholder command functions.
+    :param: (pad_nest): A list of templates for structuring files in the nightjar CLI nest Library.
+    :param: (pad_egg): A list of templates for creating egg files.
+    :param: (pad_flight): A list of templates for creating navigational menu maps aka "flight plans".
+    :param: MENU: A list of function VARIABLES:
                     1. print to user.
                     2. print to user with input.
                     3. print to user with input and validation.
-                2. twig padding: A list of templates for command functions.
-                    1. create a new flight plan navigational menu.
-                    2. create a new twig command.
-                    3. create a new save egg file format for the nest.
-                3. nest padding: A list of templates for storing user commands and files.
-    UNIVERSAL: A master list, or 'nest', of all stored commands and files in the Nightjar CLI library.
-    ADDITIONAL REQ: Nest commands must include the format of the file in the title.
     """
     if not os.path.exists("padding"):
         os.makedirs("padding")
@@ -197,30 +195,6 @@ def padding_nest():
     if not os.path.exists(template_dir):
         os.makedirs(template_dir)  # Establish the directory structure for templates
     print("Padding nest created, lets add some twigs!.")
-
-def pad_chirp("input_parameter"):
-    """
-    SYNTAX: [pp chirp]=('input_parameter')
-    PLAIN TEXT FORMAT: chirp -tt # parser should convert [tt] to [π]
-    Logic: A list of templates, or 'padding' in the Nightjar CLI library.
-    CATEGORIES: 1. chirp padding (pad_chirp): A list of templates for nightjars chirp language prompting to user.
-                    1. print to user.
-                    2. print to user with input.
-                    3. print to user with input and validation.
-                2. twig padding: A list of templates for command functions.
-                    1. create a new flight plan navigational menu.
-                    2. create a new twig command.
-                    3. create a new save egg file format for the nest.
-                3. nest padding: A list of templates for storing user commands and files.
-    UNIVERSAL: A master list, or 'nest', of all stored commands and files in the Nightjar CLI library.
-    ADDITIONAL REQ: Nest commands must include the format of the file in the title.
-    """
-    if not os.path.exists("padding"):
-        os.makedirs("padding")
-    template_dir = "padding"
-    if not os.path.exists(template_dir):
-        os.makedirs(template_dir)  # Establish the directory structure for templates
-    print("Padding chirp created, lets add some chirps!.")
 
 
 def discard_nest(param):
@@ -235,33 +209,33 @@ def discard_nest(param):
     :param param: The name of the file to be deleted.
     :return: None
     """
-    pass
 
 
-def bird_verbs(command_input, show_twig=None):
+def bird_verbs(command_input, *args):
     """
     Parses and executes a given command_input by delegating to the appropriate function.
     """
     command_actions = {
-        'show nest': all_nest,
+        'list nest': all_nest,
         'store nest': store_nest,
         'discard nest': discard_nest(command_input) if command_input else discard_nest("nest_1.py"),
         'get nest': get_nest(command_input),
         'lay egg': lay_egg(command_input) if command_input else lay_egg("egg_1.py", "This is the first egg."),
-        'show eggs': show_eggs,
+        'list eggs': list_eggs,
         'rotten egg': rotten_egg,
-        'pad egg': pad_egg,
         'get egg': get_egg,
-
-        'show twigs': show_twigs,
-        'discard twig': discard_twig(),
-        'pad twig': pad_twig,
+        'list twigs': list_twigs(command_input),
+        'discard twig': discard_twig(command_input) if command_input else discard_twig("twig_1.py", ),
         'store twig': store_twig,
         'get twig': get_twigs,
         'flight': flight_plan(command_input),
         'padding': padding_nest,
-        'pad chirp': pad_chirp,
-
+        'pad egg': padding_egg(),
+        'padding flight': padding_flight(),
+        'padding chirp': padding_chirp(),
+        'padding twig': padding_twig(),
+        'help': view_cheat_sheet,
+        'intro': initiate_nightjar,
 
         # Add future command mappings here...
     }
@@ -303,18 +277,19 @@ def lay_egg(file_name, file_content):
     # Placeholder: Add logic to save the file to the nest library.
 
 
-def show_eggs():
+def list_eggs():
     """
     MENU: A master list, or 'nest', of all stored commands and files in the Nightjar CLI library.
     CATEGORICAL file LISTING SUBMENU: Displays egg files by sorted category.
-    SHOW TYPE TOTAL: Displays the file type and total number of files in the nest library.
-    SHOW BY TYPE: Displays the egg file titled followed by their file type.
+    list TYPE TOTAL: Displays the file type and total number of files in the nest library.
+    list BY TYPE: Displays the egg file titled followed by their file type.
     SEARCH EGG: Search for a specific egg file in the nest library.
     """
     for file in os.listdir("nightjar_commands.db"):
         print(file)
     # Placeholder: Add logic to display all files saved in the Nightjar CLI library.
     print("Eggs are ready to hatch!")
+
 
 def rotten_egg(file_name):
     """
@@ -330,6 +305,95 @@ def rotten_egg(file_name):
     print(f"Egg is Discarded! '{file_name}' is deleted.")
     # Placeholder: Add logic to delete the file from the nest library.
 
+
+def padding_egg():
+    """
+    Logic: A list of templates for creating egg files in the Nightjar CLI library.
+    CATEGORIES:
+    :param: (egg_chirp): A list of templates for nightjars chirp language prompting and validation to user.
+    :param: (egg_twig): A list of templates for placeholder command functions.
+    :param: (egg_nest): A list of templates for structuring files in the nightjar CLI nest Library.
+    :param: (egg_egg): A list of templates for creating egg files.
+    :param: (egg_flight): A list of templates for creating navigational menu maps aka "flight plans".
+    :param: MENU: A list of function VARIABLES:
+                    1. print to user.
+                    2. print to user with input.
+                    3. print to user with input and validation.
+    """
+    if not os.path.exists("egg"):
+        os.makedirs("egg")
+    template_dir = "egg"
+    if not os.path.exists(template_dir):
+        os.makedirs(template_dir)  # Establish the directory structure for templates
+    print("Egg nest created, lets add some eggs!.")
+
+
+def padding_twig():
+    """
+    Logic: A list of templates for creating twig commands in the Nightjar CLI library.
+    CATEGORIES:
+    :param: (twig_chirp): A list of templates for nightjars chirp language prompting and validation to user.
+    :param: (twig_twig): A list of templates for placeholder command functions.
+    :param: (twig_nest): A list of templates for structuring files in the nightjar CLI nest Library.
+    :param: (twig_egg): A list of templates for creating egg files.
+    :param: (twig_flight): A list of templates for creating navigational menu maps aka "flight plans".
+    :param: MENU: A list of function VARIABLES:
+                    1. print to user.
+                    2. print to user with input.
+                    3. print to user with input and validation.
+    """
+    if not os.path.exists("twig"):
+        os.makedirs("twig")
+    template_dir = "twig"
+    if not os.path.exists(template_dir):
+        os.makedirs(template_dir)  # Establish the directory structure for templates
+    print("Twig nest created, lets add some twigs!.")
+
+
+def padding_flight():
+    """
+    Logic: A list of templates for creating navigational menu maps aka "flight plans" in the Nightjar CLI library.
+    CATEGORIES:
+    :param: (flight_chirp): A list of templates for nightjars chirp language prompting and validation to user.
+    :param: (flight_twig): A list of templates for placeholder command functions.
+    :param: (flight_nest): A list of templates for structuring files in the nightjar CLI nest Library.
+    :param: (flight_egg): A list of templates for creating egg files.
+    :param: (flight_flight): A list of templates for creating navigational menu maps aka "flight plans".
+    :param: MENU: A list of function VARIABLES:
+                    1. print to user.
+                    2. print to user with input.
+                    3. print to user with input and validation.
+    """
+    if not os.path.exists("flight"):
+        os.makedirs("flight")
+    template_dir = "flight"
+    if not os.path.exists(template_dir):
+        os.makedirs(template_dir)  # Establish the directory structure for templates
+    print("Flight nest created, lets add some flight plans!.")
+
+
+def padding_chirp():
+    """
+    Logic: A list of templates for creating chirp commands in the Nightjar CLI library.
+    CATEGORIES:
+    :param: (chirp_chirp): A list of templates for nightjars chirp language prompting and validation to user.
+    :param: (chirp_twig): A list of templates for placeholder command functions.
+    :param: (chirp_nest): A list of templates for structuring files in the nightjar CLI nest Library.
+    :param: (chirp_egg): A list of templates for creating egg files.
+    :param: (chirp_flight): A list of templates for creating navigational menu maps aka "flight plans".
+    :param: MENU: A list of function VARIABLES:
+                    1. print to user.
+                    2. print to user with input.
+                    3. print to user with input and validation.
+    """
+    if not os.path.exists("chirp"):
+        os.makedirs("chirp")
+    template_dir = "chirp"
+    if not os.path.exists(template_dir):
+        os.makedirs(template_dir)  # Establish the directory structure for templates
+    print("Padding up the nest, lets add some twigs to structure!.")
+
+
 def store_nest(command_title, context):
     """
     Logic: A master list, or 'nest', of all stored commands and files in the Nightjar CLI library.
@@ -343,9 +407,6 @@ def store_nest(command_title, context):
         db[command_title] = context
         print(f"Saved '{command_title}' to the library.")
     # Placeholder: Add logic to save a command or file with context to the Nightjar CLI library.
-    """
-    Saves a command or file with context to the Nightjar CLI library.
-    """
     with shelve.open('nightjar_commands.db') as db:
         db[command_title] = context
         print(f"Saved '{command_title}' to the library.")
@@ -401,8 +462,20 @@ def discard_twig(command_title):
             print("Deletion cancelled.")
 
 
+def get(function_name):
+    """
+    SYNTAX: command_title =[𝙂]==('function_name.txt') # All nest get commands must include the format of the file in the title.
+    PLAIN TEXT FORMAT: nest command get --function_name.txt
+    Retrieves and loads a function from the Nightjar CLI library.
+    """
+    # Placeholder: Add logic to retrieve a function from the Nightjar CLI library.
+    print(f"Function '{function_name}' retrieved from the library.")
+
+
 def get_twigs(task_name, *args):
     """
+    SYNTAX: 𝙏 =('[𝙂]=('task_name'))
+    PLAIN TEXT FORMAT: get twig --task_name
     Starts and or simulates a task or twig with a given task_name and additional arguments.
     This is an enhancement over the placeholder that provides actual logic.
     """
@@ -412,8 +485,12 @@ def get_twigs(task_name, *args):
     # Run a script, execute a command, start a new process, etc.
     print(f"twig '{task_name}' started with arguments {args}.")
 
+
 def store_twig(task_name, task_description):
     """
+    SYNTAX: 𝙏 =('[𝙎]=('task_name, task_description'))
+    PLAIN TEXT FORMAT: store twig --task_name --task_description
+    Saves a command or file with context to the Nightjar CLI library.
     Logic:  A specific logic for saving operational twig python commands to the Nightjar CLI Nest. the twig command is
             designed as the command the directly edits and or enhances the nightjar CLI with new commands.
     PADDING: simple twig commands can be created through the padding nest.
@@ -433,9 +510,20 @@ def store_twig(task_name, task_description):
         db[task_name] = task_description
         print(f"Saved '{task_name}' to the library.")
     # Placeholder: Add logic to save a command or file with context to the Nightjar CLI functions.
+
+
+def list_twigs(command_title, *args):
     """
-    Creates and saves a simple prompting and validation twig command to the Nightjar CLI functions.
+    Logic: A list of twig commands, for the current menu in the nightjar CLI Nest Library.
+    SYNTAX: 𝙇 =('command_title')
+    list TYPE TOTAL: Displays the file type and total number of files in the nest library.
+    list BY TYPE: Displays the twig file titled followed by their file type.
+    SEARCH TWIG: Search for a specific twig file in the nest library.
     """
+    for file in os.listdir("nightjar_commands.db"):
+        print(file)
+    # Placeholder: Add logic to display all files saved in the Nightjar CLI library.
+    print("Twigs are ready to use!")
 
 
 # Navigation function, provide a list of 4 available menus to navigate to
@@ -468,25 +556,121 @@ def flight_plan(menu_name, *args):
         flight_plan(menu_name)
 
 
+def store(command):
+    """
+    SYNTAX: [+]=('command')
+    PLAIN TEXT FORMAT: command store --command
+    Logic: A command to save a command to the nest library.
+    CLI DISPLAY: Saves a command to the nest library.
+    """
+    with shelve.open(SHELVE_DB) as db:
+        db['command'] = command
+        print(f"Command '{command}' saved to the library.")
+    # Placeholder: Add logic to save a command to the nest library.
+    with shelve.open(SHELVE_DB) as db:
+        db['command'] = command
+        print(f"Command '{command}' saved to the library.")
+    # Placeholder: Add logic to save a command to the nest library.
+
+
+def twig(command):
+    """
+    SYNTAX: command_title[-]=('command')
+    PLAIN TEXT FORMAT: command twig --command
+    Logic: A command to delete a command saved in the nest library.
+    CLI DISPLAY: Deletes a command saved in the nest library.
+    """
+    with shelve.open(SHELVE_DB) as db:
+        del db[command]
+        print(f"Command '{command}' deleted from the library.")
+    # Placeholder: Add logic to delete a command from the nest library.
+    with shelve.open(SHELVE_DB) as db:
+        del db[command]
+        print(f"Command '{command}' deleted from the library.")
+    # Placeholder: Add logic to delete a command from the nest library.
+
+
+def get(command):
+    """
+    SYNTAX: command_title[+]=('command')
+    PLAIN TEXT FORMAT: command get --command
+    Logic: A command to load a command saved in the nest library.
+    CLI DISPLAY: Loads a command saved in the nest library.
+    """
+    with shelve.open(SHELVE_DB) as db:
+        print(db[command])
+    # Placeholder: Add logic to load a command from the nest library.
+    with shelve.open(SHELVE_DB) as db:
+        print(db[command])
+    # Placeholder: Add logic to load a command from the nest library.
+
+
+def discard(command):
+    """
+    SYNTAX: command_title[-]=('command')
+    PLAIN TEXT FORMAT: command discard --command
+    Logic: A command to delete a command saved in the nest library.
+    CLI DISPLAY: Deletes a command saved in the nest library.
+    """
+    with shelve.open(SHELVE_DB) as db:
+        del db[command]
+        print(f"Command '{command}' deleted from the library.")
+    # Placeholder: Add logic to delete a command from the nest library.
+    with shelve.open(SHELVE_DB) as db:
+        del db[command]
+        print(f"Command '{command}' deleted from the library.")
+    # Placeholder: Add logic to delete a command from the nest library.
+
+
+def padding(command):
+    """
+    SYNTAX: command_title[𝙋]=('command')
+    PLAIN TEXT FORMAT: command pad --command # pad will always parse to [𝙋]=command
+    Logic: A command to save a command to the nest library.
+    CLI DISPLAY: Saves a command to the nest library.
+    """
+    with shelve.open(SHELVE_DB) as db:
+        db['command'] = command
+        print(f"Command '{command}' saved to the library.")
+    # Placeholder: Add logic to save a command to the nest library.
+    with shelve.open(SHELVE_DB) as db:
+        db['command'] = command
+        print(f"Command '{command}' saved to the library.")
+    # Placeholder: Add logic to save a command to the nest library.
+
+
 def parse_nightjar(command):
     """
+    Logic: The parsing logic and custom Syntax Translator for the nightjar next CLI Library.
     Parse and execute commands within the @nightjar CLI.
     """
-    if command.startswith("ƒ="):
+    if command.startswith("nightjar=-=-"):
+        # Logic for native init from the Windows OS terminal
+        pass
+    elif command.startswith("FF=ƒ"):
         # Logic for if command
         pass
-    elif command.startswith("[+]="):
-        store_nest(command[4:], )
-    elif command.startswith("[-]="):
-        discard_twig(command[4:])
-    elif command.startswith("[-+]="):
-        get_twigs(command[5:])
-    elif command.startswith("[%]="):
-        flight_plan(command[4:])
-    elif command.startswith("[𝓁]="):
-        show_eggs()
-    elif command.startswith("[𝑡]="):
+    elif command.startswith("[store]=+"):
+        store(command[4:], )
+    elif command.startswith("[discard]=-"):
+        discard(command[4:])
+    elif command.startswith("[pad]=𝙋"):
+        padding(command[4:])
+    elif command.startswith("[LL]=𝙇"):
+        list(command[4:])
+    elif command.startswith("[egg]=𝙀"):
         padding_nest()
+    elif command.startswith("[get]=𝙂"):
+        get(command[5:])
+    elif command.startswith("[TT]=𝙏"):
+        twig(command[5:])
+    elif command.startswith("[nest]=𝙉"):
+        all_nest()
+    elif command.startswith("[flight]=menu"):
+        flight_plan(command[6:])
+    else:
+        print("Invalid command. Please try again.")
+        parse_nightjar(command)
 
 
 # Main CLI Loop
@@ -524,7 +708,6 @@ if __name__ == "__main__":
     main()
 
 
-
 def main_loop():
     welcome_message = "Welcome to @nightjar CLI. Type 'exit' to quit."
     print(welcome_message)
@@ -537,5 +720,3 @@ def main_loop():
             handle_multiline_input(command_input[3:])
         else:
             handle_multiline_input(command_input)
-
-# This logic would be below the intro() function within the `if __name__ == "__main__":` block.
