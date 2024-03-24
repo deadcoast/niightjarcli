@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
+"""
 # "Created on 2022-11-22
-# "@Author: Firstname Lastname
+# "@Author: deadcoast
 # "@Title: nightjar - A Python CLI Nest Library
 # "@Description: A Dynamic, customizable and modular CLI creation and Native Windows Library CLI.
 # "@Features:
@@ -15,6 +15,7 @@
 # 6. padding: A list of templates for storing user commands and files in 3 categories.
 # @Version: 0.1.0
 # @License: MIT
+"""
 
 import getpass
 import logging
@@ -28,62 +29,84 @@ from pathlib import Path
 command = input("> ")
 
 
-class NightjarCLILogging:(object):
-"""
-Logic: A class to handle logging for the Nightjar CLI.
-SYNTAX: [𝙉]=('input_parameter')
-PLAIN TEXT FORMAT: nest --input_parameter
-function: A class to handle logging for the Nightjar CLI.
-input_parameter: The input parameter for the command.
-VARIABLES LIST: .md, .asciidoc, .ansi, .txt, .json, .py, .sh, .csv, .html, .css, .js, .sql, .xml, .yaml,
-.toml, .ini, .cfg, .conf, .log, .md, .rst, .tex, .pdf, .docx, .pptx, .xlsx, .csv, .zip, .tar, .gz, .7z, .rar, .jpg,
-.png, .gif, .svg, .mp4, .mp3, .wav, .flac, .ogg, .avi, .mov, .mkv, .wmv, .webm, .flv, .pdf, .docx, .pptx, .xlsx,
-"""
-# Logging
-logging.basicConfig(
-    filename="nightjar.log",
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
+class NightjarCLILogging(object):
+    """
+    Logic: A class to handle logging for the Nightjar CLI.
+    SYNTAX: [𝙉]=('input_parameter')
+    PLAIN TEXT FORMAT: nest --input_parameter
+    CATEGORIES:
+    :param: MENU: A list of function VARIABLES:
+                    1. print to user.
+                    2. print to user with input.
+                    3. print to user with input and validation."""
 
-# Logging
-logging.info(f"Command: {command}")
-logging.info("Nightjar CLI is active.")
 
-# The path to shelve database
-HOME_DIR = str(Path.home())
-DB_PATH = os.path.join(HOME_DIR, ".nightjar")
-SHELVE_DB = os.path.join(DB_PATH, "nightjar")
+    def __init__(self):
+        self.DB_PATH = None
+        self.SHELVE_DB = None
+        self.setup_logging()
+        self.setup_database()
 
-# Establish the directory structure for templates
-if not os.path.exists(DB_PATH):
-    os.makedirs(DB_PATH)
+    def setup_logging(self):
+        logging.basicConfig(
+            filename="nightjar.log",
+            level=logging.INFO,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
+        logging.info("Nightjar CLI is active.")
 
-# Define the shelve database path
-if not os.path.exists(SHELVE_DB):
-    with shelve.open(SHELVE_DB):
-        pass
+    def setup_database(self):
+        HOME_DIR = Path.home()
+        self.DB_PATH = HOME_DIR / ".nightjar"
+        self.SHELVE_DB = self.DB_PATH / "nightjar"
+        self.DB_PATH.mkdir(parents=True, exist_ok=True)
+        if not self.SHELVE_DB.exists():
+            with shelve.open(self.SHELVE_DB):
+                pass
 
-# Add a new key-value pair to the database
-with shelve.open(SHELVE_DB) as db:
-    db["key"] = "value"
+    def open_database(self):
+        self.db = shelve.open(self.SHELVE_DB)
 
-# Retrieve the value associated with the key
-with shelve.open(SHELVE_DB) as db:
-    value = db["key"]
-    print(value)
+    def close_database(self):
+        self.db.close()
 
-# Remove the key-value pair from the database
-with shelve.open(SHELVE_DB) as db:
-    del db["key"]
+    def add_key_value_pair(self, key, value):
+        self.db[key] = value
 
-# Check if the key exists in the database
-with shelve.open(SHELVE_DB) as db:
-    if "key" in db:
-        print("Key exists in the database.")
-    else:
-        print("Key does not exist in the database.")
+    def retrieve_value(self, key):
+        return self.db[key]
+
+    def remove_key(self, key):
+        del self.db[key]
+
+    def check_key_exists(self, key):
+        return key in self.db
+
+    def execute_database_operations(self):
+        self.open_database()
+        self.add_key_value_pair("key", "value")
+        value = self.retrieve_value("key")
+        self.log_info(value)
+        self.remove_key("key")
+        if self.check_key_exists("key"):
+            self.log_info("Key exists in the database.")
+        else:
+            self.log_info("Key does not exist in the database.")
+        self.close_database()
+
+    def log_info(self, message):
+        logging.info(message)
+
+    def log_error(self, message):
+        logging.error(message)
+
+    def run(self):
+        self.execute_database_operations()
+
+if __name__ == "__main__":
+    nightjar_cli_logging = NightjarCLILogging()
+    nightjar_cli_logging.run()
 
 
 # The path to shelve database
