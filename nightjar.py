@@ -30,24 +30,13 @@ command = input("> ")
 
 
 class NightjarCLILogging(object):
-    """
-    Logic: A class to handle logging for the Nightjar CLI.
-    SYNTAX: [𝙉]=('input_parameter')
-    PLAIN TEXT FORMAT: nest --input_parameter
-    CATEGORIES:
-    :param: MENU: A list of function VARIABLES:
-                    1. print to user.
-                    2. print to user with input.
-                    3. print to user with input and validation."""
-
-
     def __init__(self):
-        self.DB_PATH = None
-        self.SHELVE_DB = None
-        self.setup_logging()
-        self.setup_database()
+        self.__DB_PATH = None
+        self.__SHELVE_DB = None
+        self.__setup_logging()
+        self.__setup_database()
 
-    def setup_logging(self):
+    def __setup_logging(self):
         logging.basicConfig(
             filename="nightjar.log",
             level=logging.INFO,
@@ -56,53 +45,29 @@ class NightjarCLILogging(object):
         )
         logging.info("Nightjar CLI is active.")
 
-    def setup_database(self):
+    def __setup_database(self):
         HOME_DIR = Path.home()
-        self.DB_PATH = HOME_DIR / ".nightjar"
-        self.SHELVE_DB = self.DB_PATH / "nightjar"
-        self.DB_PATH.mkdir(parents=True, exist_ok=True)
-        if not self.SHELVE_DB.exists():
-            with shelve.open(self.SHELVE_DB):
+        self.__DB_PATH = HOME_DIR / ".nightjar"
+        self.__DB_PATH.mkdir(parents=True, exist_ok=True)
+        self.__SHELVE_DB = self.__DB_PATH / "nightjar"
+        if not self.__SHELVE_DB.exists():
+            with shelve.open(self.__SHELVE_DB):
                 pass
 
-    def open_database(self):
-        self.db = shelve.open(self.SHELVE_DB)
-
-    def close_database(self):
-        self.db.close()
-
-    def add_key_value_pair(self, key, value):
-        self.db[key] = value
-
-    def retrieve_value(self, key):
-        return self.db[key]
-
-    def remove_key(self, key):
-        del self.db[key]
-
-    def check_key_exists(self, key):
-        return key in self.db
-
-    def execute_database_operations(self):
-        self.open_database()
-        self.add_key_value_pair("key", "value")
-        value = self.retrieve_value("key")
-        self.log_info(value)
-        self.remove_key("key")
-        if self.check_key_exists("key"):
-            self.log_info("Key exists in the database.")
-        else:
-            self.log_info("Key does not exist in the database.")
-        self.close_database()
-
-    def log_info(self, message):
-        logging.info(message)
-
-    def log_error(self, message):
-        logging.error(message)
+    def execute_database_operations(self, key, value):
+        try:
+            with shelve.open(self.__SHELVE_DB) as db:
+                db[key] = value
+                logging.info('Value for the key is: %s', value)
+        except FileNotFoundError as e:
+            logging.error(f"Database does not exist: {str(e)}")
+        except KeyError as e:
+            logging.error(f"Key does not exist in the database: {str(e)}")
+        except Exception as e:
+            logging.error(f"Error accessing the database: {str(e)}")
 
     def run(self):
-        self.execute_database_operations()
+        self.execute_database_operations("key", "value")
 
 if __name__ == "__main__":
     nightjar_cli_logging = NightjarCLILogging()
