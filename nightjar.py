@@ -32,7 +32,7 @@ from src.modules.egg_handler import lay_egg, get_egg, rotten_egg
 from src.modules.nest_handler import get_nest
 from src.modules.padding_handler import discard_nest, padding_egg, padding_flight, padding_chirp, padding_twig, \
     padding_nest, padding_basket
-from src.modules.twig_handler import list_twigs, discard_twig, get_twigs, store_twig
+from src.modules.twig_handler import twigs_basket, rotten_twig, get_twigs, store_twig
 
 # Command prompt
 command = input("> ")
@@ -243,8 +243,8 @@ def bird_verbs(command_input, nest_basket, discard_padding=None, *args):
         ' egg --all': egg_list,
         'rotten egg': rotten_egg,
         'get egg': get_egg,
-        'list twigs': list_twigs(command_input),
-        '-rotten twig': discard_twig(command_input) if command_input else discard_twig("twig_1.py", ),
+        'list twigs': twigs_basket(command_input),
+        '-rotten twig': rotten_twig(command_input) if command_input else rotten_twig("twig_1.py"),
         'lay twig': store_twig,
         'get twig': get_twigs,
         'flight': flight_plan(command_input),

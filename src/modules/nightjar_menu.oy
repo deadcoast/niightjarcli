@@ -3,26 +3,103 @@
 ||=================================================================================||
 || .----------------------------------.  .--------------------------------------.  ||
 || |    nightjar ƒlight HISTORY       |  |         CURRENT MENU: {str}          |  ||
-|| |                    _time_{time}  |  |                                      |  ||
+|| |                    _time_{time}  |  |       {short concise purpose'}       |  ||
 || |   .--------------------------.   |  | <-- back   --menu nav--     next --> |  ||
-|| |   |     {str} {str} {str}    |   |  |   - Flux Stability: [OPTIMAL]        |  ||
-|| |   |  \   / \   / \   / \   / |   |  |   - Capacitance Charge: [100%]       |  ||
-|| |   |   \ /   \ /   \ /   \ /  |   |  |   - Temporal Wave: [CALIBRATED]      |  ||
-|| |   '--------------------------'   |  |                                      |  ||
+|| |   |     {str} {str} {str}    |   |  |  --User--Path--Interface--Storage--  |  ||
+|| |   |  \   / \   / \   / \   / |   |  | nightjar: {nightjar/folder/path}     |  ||
+|| |   |   \ /   \ /   \ /   \ /  |   |  | stored_1: {nightjar/folder/path}     |  ||
+|| |   '--------------------------'   |  | stored_2: {nightjar/folder/path}     |  ||
 || '----------------------------------'  '--------------------------------------'  ||
 ||=================================================================================||
 || .----------------------------------.  .--------------------------------------.  ||
 || |          [egg_files]             |  |          [nightjar_core]             |  ||
 || |            --help                |  |                                      |  ||
-|| |   Script Cheatsheet: {str}       |  |                                      |  ||
-|| |   Notes: [g1.] [g2.] [g3.] [g4.] |  |                                      |  ||
-|| |   List All: [egg --all]          |  | [>] help - Display commands          |  ||
-|| |   Eggs in Nest: {str}            |  | [>] intro - Introduction to nightjar |  ||
-|| | [g1.] "filename" "two word tag   |  | [>] map - Display the nightjar map   |  ||
+|| |  Script Cheatsheet: {str}        |  |                                      |  ||
+|| |  Notes: [gk1.] [g2.] [g3.] [g4.] |  |                                      |  ||
+|| |  List All: [egg --all]           |  | [>] help - Display commands          |  ||
+|| |  Eggs in Nest: {str}             |  | [>] intro - Introduction to nightjar |  ||
+|| | [gk1.] "filename" "two word tag  |  | [>] map - Display the nightjar map   |  ||
 || | [g2.] "filename" "two word tag   |  | [>] nest - List system Commands      |  ||
 || | [g3.] "filename" "two word tag   |  | [>] basket - List file Categories    |  ||
 || | [g4.] "filename" "two word tag   |  |                                      |  ||
 || '----------------------------------'  '--------------------------------------'  ||
 ||=================================================================================||
-|| [>]map, intro, nest, basket, help  |  | --get --all --lay <--, --> ...    ||
+|| [>]map, intro, nest, basket, help  |  | --get --all --lay <--, --> ...          ||
 '==================================================================================='
+
+# nightjar ƒlight HISTORY
+# _time_{time}
+# .--------------------------.
+# |     {str} {str} {str}    |
+# |  \   / \   / \   / \   / |
+# |   \ /   \ /   \ /   \ /  |
+# '--------------------------'
+
+# CURRENT MENU: {str}
+# {short concise purpose'}
+
+# <-- back   --menu nav--     next -->
+#  --User--Path--Interface--Storage--
+# nightjar: {nightjar/folder/path}
+# stored_1: {nightjar/folder/path}
+# stored_2: {nightjar/folder/path}
+
+# .----------------------------------.  .--------------------------------------.
+# |          [egg_files]             |  |          [nightjar_core]             |
+# |            --help                |  |                                      |
+# |  Script Cheatsheet: {str}        |  |                                      |
+# |  Notes: [gk1.] [g2.] [g3.] [g4.] |  |                                      |
+# |  List All: [egg --all]           |  | [>] help - Display commands          |
+# |  Eggs in Nest: {str}             |  | [>] intro - Introduction to nightjar |
+# | [gk1.] "filename" "two word tag  |  | [>] map - Display the nightjar map   |
+# | [g2.] "filename" "two word tag   |  | [>] nest - List system Commands      |
+# | [g3.] "filename" "two word tag   |  | [>] basket - List file Categories    |
+# | [g4.] "filename" "two word tag   |  |                                      |
+# '----------------------------------'  '--------------------------------------'
+
+# [>]map, intro, nest, basket, help
+# --get --all --lay <--, --> ...
+
+# egg_files
+# gk1: 'EGGKRYPT 1': "filename" "two word tag" BY DEFAULT IS AN ENCRYPTED NOTE FOR API KEYS OR PASSWORDS
+# g2: 'egg_file_1': "filename" "two word tag" DEFAULT NIGHTJAR CLI FILE .TXT, CAN BE USED FOR ANYTHING
+
+# nightjar_core
+# help - Display the guide commands and how to use them
+# intro - Introduction to nightjar
+# map - Display the nightjar navigational menu map
+# nest - List system commands
+# basket - List file categories, then list files in each category upon user selection
+# [>] help, intro, map, nest, basket
+# --get --all --lay <--, -->
+
+# nightjar ƒlight HISTORY
+# _time_{time} an easy reference for your current system time
+# .--------------------------. Flight Plan, History of the User Menu Navigation
+# |   1{str} 2{str} 3{str}   | Menu History 1={str} 'The Last Menu Visited'
+# |  \   / \   / \   / \   / | Menu History 2={str} 'The Second Last menu Visited
+# |   \ /   \ /   \ /   \ /  | Menu History 3={str} 'The Third Last Menu Visited'
+# '--------------------------'
+
+# CURRENT MENU: {str} 'The Current Menu the User is on'
+# {short concise purpose'} 'A brief description of the current menu'
+
+# <-- back   --menu nav--     next --> 'Navigation Options'
+#  --User--Path--Interface--Storage-- 'The User, Path, Interface, and Storage Options'
+# nightjar: {nightjar/folder/path} 'The Current Nightjar Folder Path'
+# stored_1: {nightjar/folder/path} 'A Stored Nightjar Folder Path'
+# stored_2: {nightjar/folder/path} 'A Stored Nightjar Folder Path'
+
+# .----------------------------------.  .--------------------------------------.
+# |          [egg_files]             |  |          [nightjar_core]             |
+# |            --help                |  |                                      |
+# |  Script Cheatsheet: {str}        |  |                                      |
+# |  Notes: [gk1.] [g2.] [g3.] [g4.] |  |                                      |
+# |  List All: [egg --all]           |  | [>] help - Display commands          |
+# |  Eggs in Nest: {str}             |  | [>] intro - Introduction to nightjar |
+# | [gk1.] "filename" "two word tag  |  | [>] map - Display the nightjar map   |
+# | [g2.] "filename" "two word tag   |  | [>] nest - List system Commands      |
+# | [g3.] "filename" "two word tag   |  | [>] basket - List file Categories    |
+# | [g4.] "filename" "two word tag   |  |                                      |
+# '----------------------------------'  '--------------------------------------'
+
